@@ -9,7 +9,7 @@
             $dbh = new PDO($dsn,$user,$pass,[
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ]);
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             echo '接続失敗' . $e->getMessage();
             exit;
         }
@@ -24,7 +24,7 @@
         $stmt = $dbh->query($sql);
         // sqlの結果を受け取る
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($result);
+        // var_dump($result);
         return $result;
         $dbh = null;
     }
@@ -61,6 +61,7 @@
             <td><?php echo $columns['id'] ?></td>
             <td><?php echo $columns['title'] ?></td>
             <td><?php echo setCategoryName($columns['category']); ?></td>
+            <td><a href="/detail.php?id=<?php echo $columns['id'] ?>">詳細</a></td>
         </tr>
         <?php endforeach; ?>
     </table>
