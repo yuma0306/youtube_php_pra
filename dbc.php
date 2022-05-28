@@ -32,9 +32,9 @@
     // 引数：数字 返り値：カテゴリーの文字列
     function setCategoryName($category) {
         if($category === '1') {
-            return 'ブログ';
-        } else if($category === '2') {
             return '日常';
+        } else if($category === '2') {
+            return 'プログラミング';
         }
         return 'その他';
     }
