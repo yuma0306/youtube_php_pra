@@ -28,7 +28,6 @@
         return $result;
         $dbh = null;
     }
-    $blogData = getAllBlog();
     // カテゴリー名を表示
     // 引数：数字 返り値：カテゴリーの文字列
     function setCategoryName($category) {
@@ -39,31 +38,25 @@
         }
         return 'その他';
     }
+
+    // 引数: $id
+    // 返り値: $result
+    function getBlog($id) {
+        if(empty($id)) {
+            exit('IDが不正です');
+        }
+        $dbh = connectDb();
+        // SQL準備
+        $stmt = $dbh->prepare('SELECT * FROM blog Where id = :id');
+        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        // SQL実行
+        $stmt->execute();
+        // 結果を取得
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        // var_dump($result);
+        if(!$result) {
+            exit('ブログがありません');
+        }
+        return $result;
+    }
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ブログ一覧</title>
-</head>
-<body>
-    <h1>ブログ一覧</h1>
-    <table>
-        <tr>
-            <th>No</th>
-            <th>タイトル</th>
-            <th>カテゴリ</th>
-        </tr>
-        <?php foreach($blogData as $columns) :?>
-        <tr>
-            <td><?php echo $columns['id'] ?></td>
-            <td><?php echo $columns['title'] ?></td>
-            <td><?php echo setCategoryName($columns['category']); ?></td>
-            <td><a href="/detail.php?id=<?php echo $columns['id'] ?>">詳細</a></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-</body>
-</html>
