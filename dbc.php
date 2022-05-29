@@ -1,7 +1,9 @@
 <?php
+class Dbc {
+    protected $table_name;
     // データベース接続
     // 引数：なし 返り値：接続結果
-    function connectDb() {
+    protected function connectDb() {
         $dsn = 'mysql:host=localhost;dbname=blog.app;charset=utf8';
         $user = 'blog_user';
         $pass = 'hhhkhyhp';
@@ -17,9 +19,9 @@
     }
     // データを取得
     // 引数：なし 返り値：取得したデータ
-    function getAllBlog() {
-        $dbh = connectDb();
-        $sql = 'select * from blog';
+    public function getAll() {
+        $dbh = $this->connectDb();
+        $sql = "SELECT * FROM $this->table_name";
         // sqlの実行
         $stmt = $dbh->query($sql);
         // sqlの結果を受け取る
@@ -28,26 +30,16 @@
         return $result;
         $dbh = null;
     }
-    // カテゴリー名を表示
-    // 引数：数字 返り値：カテゴリーの文字列
-    function setCategoryName($category) {
-        if($category === '1') {
-            return 'ブログ';
-        } else if($category === '2') {
-            return 'プログラミング';
-        }
-        return 'その他';
-    }
 
     // 引数: $id
     // 返り値: $result
-    function getBlog($id) {
+    public function getById($id) {
         if(empty($id)) {
             exit('IDが不正です');
         }
-        $dbh = connectDb();
+        $dbh = $this->connectDb();
         // SQL準備
-        $stmt = $dbh->prepare('SELECT * FROM blog Where id = :id');
+        $stmt = $dbh->prepare("SELECT * FROM $this->table_name Where id = :id");
         $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
         // SQL実行
         $stmt->execute();
@@ -59,4 +51,5 @@
         }
         return $result;
     }
+}
 ?>
