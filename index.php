@@ -1,6 +1,8 @@
 <?php
-require_once('dbc.php');
-$blogData = getAllBlog();
+require_once('blog.php');
+//テーブル名を引数に渡してインスタンス化
+$blog = new Blog();
+$blogData = $blog->getAll();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -23,7 +25,7 @@ $blogData = getAllBlog();
         <tr>
             <td><?php echo $columns['id'] ?></td>
             <td><?php echo $columns['title'] ?></td>
-            <td><?php echo setCategoryName($columns['category']); ?></td>
+            <td><?php echo $blog->setCategoryName($columns['category']); ?></td>
             <td><a href="/detail.php?id=<?php echo $columns['id'] ?>">詳細</a></td>
         </tr>
         <?php endforeach; ?>
