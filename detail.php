@@ -2,7 +2,6 @@
     require_once('dbc.php');
     $result = getBlog($_GET['id']);
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>

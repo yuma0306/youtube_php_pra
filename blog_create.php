@@ -23,7 +23,6 @@ $sql = 'INSERT INTO
             (:title, :content, :category, :publish_status)';
 $dbh = connectDb();
 $dbh->beginTransaction();
-
 try {
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':title',$blogs['title'], PDO::PARAM_STR);
@@ -36,5 +35,4 @@ try {
     $dbh->rollBack();
     exit($e);
 }
-
 ?>
