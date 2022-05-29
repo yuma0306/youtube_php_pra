@@ -3,6 +3,10 @@ require_once('blog.php');
 //テーブル名を引数に渡してインスタンス化
 $blog = new Blog();
 $blogData = $blog->getAll();
+
+function h($s) {
+    return htmlspecialchars($s, ENT_QUOTES, "UTF-8");
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,17 +21,18 @@ $blogData = $blog->getAll();
     <p><a href="/form.html">新規作成</a></p>
     <table>
         <tr>
-            <th>No</th>
             <th>タイトル</th>
             <th>カテゴリ</th>
+            <th>投稿日時</th>
         </tr>
         <?php foreach($blogData as $columns) :?>
         <tr>
-            <td><?php echo $columns['id'] ?></td>
-            <td><?php echo $columns['title'] ?></td>
-            <td><?php echo $blog->setCategoryName($columns['category']); ?></td>
+            <td><?php echo h($columns['title']); ?></td>
+            <td><?php echo h($blog->setCategoryName($columns['category'])); ?></td>
+            <td><?php echo h($columns['post_at']); ?></td>
             <td><a href="/detail.php?id=<?php echo $columns['id'] ?>">詳細</a></td>
             <td><a href="/update_form.php?id=<?php echo $columns['id'] ?>">編集</a></td>
+            <td><a href="/blog_delete.php?id=<?php echo $columns['id'] ?>">削除</a></td>
         </tr>
         <?php endforeach; ?>
     </table>
