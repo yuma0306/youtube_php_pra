@@ -1,10 +1,7 @@
 <?php
 require_once('blog.php');
-$blogs = $_POST;
-
 $blog = new Blog();
-$blog->blogValidate($blogs);
-$blog->blogCreate($blogs);
+$result = $blog->delete($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -15,6 +12,6 @@ $blog->blogCreate($blogs);
     <title>Document</title>
 </head>
 <body>
-<p><a href="/">戻る</a></p>
+    <p><a href="/">戻る</a></p>
 </body>
 </html>
