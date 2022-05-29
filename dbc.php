@@ -34,7 +34,7 @@
         if($category === '1') {
             return 'ブログ';
         } else if($category === '2') {
-            return '日常';
+            return 'プログラミング';
         }
         return 'その他';
     }
